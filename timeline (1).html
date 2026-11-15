@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project timeline</title>
+<style>
+:root{--bg:#f6f8fa;--sf:#fff;--tx:#0f172a;--mu:#64748b;--ln:#cbd5e1;--bd:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f172a;--sf:#1e293b;--tx:#f1f5f9;--mu:#94a3b8;--ln:#475569;--bd:#334155}}
+:root[data-theme="dark"]{--bg:#0f172a;--sf:#1e293b;--tx:#f1f5f9;--mu:#94a3b8;--ln:#475569;--bd:#334155}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Segoe UI',Tahoma,system-ui,sans-serif}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px 14px 8px}
+h1{font-size:18px;font-weight:600;margin:0 auto 0 0}
+button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:8px;cursor:pointer}
+button.pr{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+.lg{display:flex;flex-wrap:wrap;gap:8px;padding:4px 14px 10px;font-size:12px;color:var(--mu)}
+.ch{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:20px;border:1px solid var(--z);font-size:12px}
+.ch:before{content:'';width:8px;height:8px;border-radius:50%;background:var(--z)}
+.tl{margin:0 14px 14px;border:1px solid var(--bd);border-radius:14px;background:var(--sf);overflow:auto}
+.in{position:relative;--ax:50%}.h .in{height:500px}
+@media(max-width:640px){.in{--ax:70px}}
+.ax,.zn{position:absolute;border-radius:3px}
+.ax{background:var(--ln)}.ax.fl{background:var(--d)}
+.zn{background:color-mix(in srgb,var(--z) 55%,transparent);border:1px solid var(--z);min-width:6px;min-height:6px;box-sizing:border-box}
+.h .ax{top:50%;height:4px;margin-top:-2px}.h .zn{top:50%;height:16px;margin-top:-8px}
+.v .ax{left:var(--ax);width:4px;margin-left:-2px}.v .zn{left:var(--ax);width:16px;margin-left:-8px}
+.it{position:absolute}
+.h .it{top:0;bottom:0;width:190px;margin-left:-95px;display:flex;flex-direction:column}
+.h .top,.h .bot{flex:1;display:flex;padding:0 4px}.h .top{align-items:flex-end}.h .bot{align-items:flex-start}
+.h .mid{position:relative;height:110px;flex:none}
+.stem{position:absolute;left:50%;width:2px;margin-left:-1px;height:28px;background:var(--c);opacity:.5}
+.up .stem{top:0}.dn .stem{bottom:0}
+.cal{position:absolute;z-index:2;width:62px;border-radius:8px;overflow:hidden;border:1px solid var(--ln);background:var(--sf);text-align:center}
+.h .cal{left:50%;top:50%;transform:translate(-50%,-50%)}
+.cal b{display:block;background:var(--c);color:var(--on);font-size:12px;font-weight:600;padding:2px 0}
+.cal span{display:block;font-size:22px;font-weight:700;line-height:1.15;padding-top:3px}
+.cal i{display:block;font-style:normal;font-size:11px;color:var(--mu);padding-bottom:3px}
+.v .it{left:0;right:0;height:0}.v .cal{left:var(--ax);top:0;transform:translate(-50%,-50%)}
+.card{box-sizing:border-box;width:100%;background:var(--sf);border:1px solid var(--bd);border-top:3px solid var(--c);border-radius:10px;padding:10px 12px;text-align:center;cursor:pointer}
+.card:hover{border-color:var(--c)}
+.v .card{position:absolute;top:0;transform:translateY(-50%);width:min(320px,calc(50% - 56px))}
+.v .up .card{right:calc(100% - var(--ax) + 46px)}.v .dn .card{left:calc(var(--ax) + 46px)}
+@media(max-width:640px){.v .card,.v .up .card,.v .dn .card{left:calc(var(--ax) + 46px);right:auto;width:calc(100% - var(--ax) - 62px)}}
+.t{display:block;font-size:14px;font-weight:600;line-height:1.35;margin-bottom:6px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}
+dialog{border:1px solid var(--bd);border-radius:14px;background:var(--sf);color:var(--tx);padding:18px;width:min(360px,90vw)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+label{display:block;font-size:12px;color:var(--mu);margin:10px 0 4px}
+input,select{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}
+.row{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}.err{color:#dc2626;font-size:12px;margin-top:8px;min-height:14px}
+</style></head><body>
+<div class="bar"><h1>Project timeline</h1><button id="bm"></button><button id="bt"></button><button class="pr" id="ba">Add item</button></div>
+<div class="lg" id="lg"></div>
+<div class="tl" id="tl"></div>
+<dialog id="dg"><div id="dgt" style="font-weight:600">Add item</div>
+<label for="ty">Type</label><select id="ty"><option value="m">Milestone</option><option value="e">Event</option><option value="z">Zone (date range)</option></select>
+<label for="ti">Title</label><input id="ti">
+<label for="da">Date</label><input type="date" id="da">
+<div id="er2"><label for="en">End date</label><input type="date" id="en"></div>
+<div class="err" id="er"></div>
+<div class="row"><button id="de">Delete</button><button id="ca">Cancel</button><button class="pr" id="sv">Save</button></div></dialog>
+<script>
+const TH={status:{n:'Status',d:'#0f766e',x:'#1d4ed8',u:'#94a3b8',e:'#d97706',z:['#6366f1','#0891b2','#c026d3','#65a30d']},violet:{n:'Violet',d:'#6d28d9',x:'#db2777',u:'#a1a1aa',e:'#ea580c',z:['#0ea5e9','#16a34a','#f59e0b','#e11d48']},sunset:{n:'Sunset',d:'#c2410c',x:'#be123c',u:'#a8a29e',e:'#0f766e',z:['#7c3aed','#0284c7','#ca8a04','#15803d']},mono:{n:'Mono',d:'#1e293b',x:'#2563eb',u:'#94a3b8',e:'#0891b2',z:['#64748b','#94a3b8','#475569','#a8a29e']}};
+let S={mode:'h',theme:'status',n:9,items:[
+{id:1,type:'m',title:'Contract Signature',date:'2026-08-01'},
+{id:2,type:'m',title:'Commencement of Buildings Excavation Works',date:'2026-08-21'},
+{id:3,type:'m',title:'Receipt of Advance Payment',date:'2026-10-12'},
+{id:4,type:'m',title:'Project Start Date',date:'2026-10-12'},
+{id:5,type:'m',title:'Project Completion date',date:'2029-08-11'},
+{id:6,type:'z',title:'Mobilisation',date:'2026-08-01',end:'2026-10-12'}]};
+try{const s=JSON.parse(localStorage.getItem('tl-v1'));if(s&&s.items)S=s}catch(e){}
+const save=()=>{try{localStorage.setItem('tl-v1',JSON.stringify(S))}catch(e){}};
+const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const D=s=>Date.parse(s+'T00:00:00Z')/864e5,T=Math.floor(Date.now()/864e5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id);
+function render(){
+const th=TH[S.theme],h=S.mode==='h',G=h?140:120,X=h?800:600,P=h?100:70;
+const pts=S.items.filter(i=>i.type!=='z').sort((a,b)=>D(a.date)-D(b.date)||a.title.localeCompare(b.title));
+const zs=S.items.filter(i=>i.type==='z');
+const d0=pts.length?D(pts[0].date):0,d1=pts.length?D(pts[pts.length-1].date):1,sp=Math.max(1,d1-d0);
+pts.forEach((p,i)=>p.px=i*G+(D(p.date)-d0)/sp*X);
+const tot=Math.max(1,pts.length?pts[pts.length-1].px:1);
+const nx=pts.find(p=>p.type==='m'&&D(p.date)>=T);
+const pxOf=s=>{const v=D(s);if(!pts.length||v<=D(pts[0].date))return pts.length?pts[0].px:0;for(let i=1;i<pts.length;i++){const a=D(pts[i-1].date),b=D(pts[i].date);if(v<=b)return b===a?pts[i].px:pts[i-1].px+(v-a)/(b-a)*(pts[i].px-pts[i-1].px)}return tot};
+const pos=px=>h?`left:calc(${P}px + ${px/tot} * (100% - ${2*P}px))`:`top:${P+px}px`;
+const len=(a,b)=>h?`width:calc(${(b-a)/tot} * (100% - ${2*P}px))`:`height:${b-a}px`;
+const dn=pts.filter(p=>p.type==='m'&&D(p.date)<T),dp=dn.length?Math.max(...dn.map(p=>p.px)):-1;
+const A=P-30;
+let o=`<div class="in" style="--d:${th.d};${h?'min-width:'+(tot+2*P)+'px':'height:'+(tot+2*P)+'px'}">`;
+o+=`<div class="ax" style="${h?`left:${A}px;right:${A}px`:`top:${A}px;bottom:${A}px`}"></div>`;
+if(dp>=0)o+=`<div class="ax fl" style="${h?`left:${A}px;width:calc(30px + ${dp/tot} * (100% - ${2*P}px))`:`top:${A}px;height:${30+dp}px`}"></div>`;
+zs.forEach((z,i)=>{const a=pxOf(z.date),b=Math.max(a,pxOf(z.end||z.date));o+=`<div class="zn" title="${esc(z.title)}" style="--z:${th.z[i%4]};${h?`left:calc(${P}px + ${a/tot} * (100% - ${2*P}px))`:`top:${P+a}px`};${len(a,b)}"></div>`});
+pts.forEach((p,i)=>{
+const up=i%2===0,d=D(p.date),ev=p.type==='e';
+const st=ev?['Event',th.e,'#fff']:d<T?['Done',th.d,'#fff']:p===nx?['Next',th.x,'#fff']:['Upcoming',th.u,'#1e293b'];
+const dt=new Date(d*864e5),card=`<div class="card" data-id="${p.id}"><span class="t">${esc(p.title)}</span><span class="tag">${st[0]}</span></div>`;
+const cal=`<div class="cal"><b>${MO[dt.getUTCMonth()]}</b><span>${String(dt.getUTCDate()).padStart(2,'0')}</span><i>${dt.getUTCFullYear()}</i></div>`;
+const sty=`style="${pos(p.px)};--c:${st[1]};--on:${st[2]}"`;
+o+=h?`<div class="it ${up?'up':'dn'}" ${sty}><div class="top">${up?card:''}</div><div class="mid"><div class="stem"></div>${cal}</div><div class="bot">${up?'':card}</div></div>`:`<div class="it ${up?'up':'dn'}" ${sty}>${card}${cal}</div>`});
+$('tl').className='tl '+S.mode;$('tl').innerHTML=o+'</div>';
+$('bm').textContent=h?'Switch to vertical':'Switch to horizontal';$('bt').textContent='Colors: '+th.n;
+$('lg').innerHTML=zs.length?zs.map((z,i)=>`<button class="ch" style="--z:${th.z[i%4]}" data-id="${z.id}">${esc(z.title)}: ${z.date} to ${z.end}</button>`).join(''):'Zones shade a date range along the line. Use Add item to create one.';
+}
+function openD(id){
+const it=S.items.find(i=>i.id===id);S.cur=id;
+$('dgt').textContent=it?'Edit item':'Add item';
+$('ty').value=it?it.type:'m';$('ti').value=it?it.title:'';$('da').value=it?it.date:'';$('en').value=it&&it.end?it.end:'';
+$('de').style.display=it?'':'none';$('er').textContent='';tg();$('dg').showModal();
+}
+const tg=()=>{$('er2').style.display=$('ty').value==='z'?'':'none';$('da').previousElementSibling.textContent=$('ty').value==='z'?'Start date':'Date'};
+$('ty').onchange=tg;
+$('bm').onclick=()=>{S.mode=S.mode==='h'?'v':'h';save();render()};
+$('bt').onclick=()=>{const k=Object.keys(TH);S.theme=k[(k.indexOf(S.theme)+1)%k.length];save();render()};
+$('ba').onclick=()=>openD(null);
+$('ca').onclick=()=>$('dg').close();
+$('de').onclick=()=>{S.items=S.items.filter(i=>i.id!==S.cur);save();render();$('dg').close()};
+$('sv').onclick=()=>{
+const ty=$('ty').value,ti=$('ti').value.trim(),da=$('da').value,en=$('en').value;
+if(!ti||!da){$('er').textContent='Enter a title and a date.';return}
+if(ty==='z'&&(!en||en<da)){$('er').textContent='Enter an end date on or after the start date.';return}
+const rec={type:ty,title:ti,date:da};if(ty==='z')rec.end=en;
+const it=S.items.find(i=>i.id===S.cur);
+if(it){Object.keys(it).forEach(k=>{if(k!=='id')delete it[k]});Object.assign(it,rec)}else S.items.push({id:S.n++,...rec});
+save();render();$('dg').close()};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-id]');if(t)openD(+t.dataset.id)});
+render();
+</script></body></html>
